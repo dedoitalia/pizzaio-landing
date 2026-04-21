@@ -76,11 +76,11 @@ window.I18N = {
 
     "wishes.eyebrow": "IL FORNO DEI DESIDERI",
     "wishes.title": "Cosa vorresti che PIZZAIO facesse?",
-    "wishes.lead": "Butta un desiderio nel forno. Ogni mese ne realizziamo uno: le ricette più votate diventano funzioni vere nella macchina.",
+    "wishes.lead": "Butta un desiderio nel forno. Ogni mese il team approva i migliori e li pubblica qui. Il più votato diventa una funzione vera nella macchina.",
     "wishes.placeholder": "Una pizza che…",
     "wishes.submit": "Metti nel forno",
     "wishes.counter": "desideri nel forno",
-    "wishes.confirm": "🔥 Perfetto, il tuo desiderio è in cottura.",
+    "wishes.confirm": "🔥 Grazie! Il tuo desiderio è in moderazione. Se approvato, comparirà qui.",
     "wishes.seed": [
       "Una pizza fritta alle 2 di notte",
       "Uno slider per la croccantezza della base",
@@ -197,11 +197,11 @@ window.I18N = {
 
     "wishes.eyebrow": "THE WISH OVEN",
     "wishes.title": "What do you secretly want PIZZAIO to do?",
-    "wishes.lead": "Drop a wish in the oven. Every month we build one: the most-wanted recipes become real features in the machine.",
+    "wishes.lead": "Drop a wish in the oven. Every month our team approves the best ones and posts them here. The top-voted wish becomes a real feature in the machine.",
     "wishes.placeholder": "A pizza that…",
     "wishes.submit": "Put it in the oven",
     "wishes.counter": "wishes in the oven",
-    "wishes.confirm": "🔥 Nice — your wish is baking.",
+    "wishes.confirm": "🔥 Thanks! Your wish is under review. If approved, it'll show up here.",
     "wishes.seed": [
       "A fried pizza at 2 in the morning",
       "A slider for crust crispiness",
@@ -318,11 +318,11 @@ window.I18N = {
 
     "wishes.eyebrow": "EL HORNO DE LOS DESEOS",
     "wishes.title": "¿Qué te gustaría que PIZZAIO hiciera?",
-    "wishes.lead": "Lanza un deseo al horno. Cada mes hacemos realidad uno: las ideas más votadas se convierten en funciones reales de la máquina.",
+    "wishes.lead": "Lanza un deseo al horno. Cada mes el equipo aprueba los mejores y los publica aquí. El más votado se convierte en una función real de la máquina.",
     "wishes.placeholder": "Una pizza que…",
     "wishes.submit": "Al horno",
     "wishes.counter": "deseos en el horno",
-    "wishes.confirm": "🔥 Perfecto, tu deseo está cocinándose.",
+    "wishes.confirm": "🔥 ¡Gracias! Tu deseo está en moderación. Si se aprueba, aparecerá aquí.",
     "wishes.seed": [
       "Una pizza frita a las 2 de la mañana",
       "Un slider para la crujiencia de la masa",
@@ -439,11 +439,11 @@ window.I18N = {
 
     "wishes.eyebrow": "LE FOUR À ENVIES",
     "wishes.title": "Que voudriez-vous secrètement que PIZZAIO fasse ?",
-    "wishes.lead": "Glissez une envie dans le four. Chaque mois on en réalise une : les idées les plus votées deviennent de vraies fonctions dans la machine.",
+    "wishes.lead": "Glissez une envie dans le four. Chaque mois notre équipe approuve les meilleures et les publie ici. La plus votée devient une vraie fonction dans la machine.",
     "wishes.placeholder": "Une pizza qui…",
     "wishes.submit": "Mettre au four",
     "wishes.counter": "envies au four",
-    "wishes.confirm": "🔥 Nickel, votre envie est en cuisson.",
+    "wishes.confirm": "🔥 Merci ! Votre envie est en modération. Si elle est approuvée, elle apparaîtra ici.",
     "wishes.seed": [
       "Une pizza frite à 2h du matin",
       "Un curseur pour le croustillant de la pâte",
@@ -560,11 +560,11 @@ window.I18N = {
 
     "wishes.eyebrow": "DER WUNSCH-OFEN",
     "wishes.title": "Was soll PIZZAIO heimlich können?",
-    "wishes.lead": "Wirf einen Wunsch in den Ofen. Jeden Monat erfüllen wir einen: die meistgewünschten Ideen werden echte Funktionen der Maschine.",
+    "wishes.lead": "Wirf einen Wunsch in den Ofen. Jeden Monat prüft unser Team die besten und veröffentlicht sie hier. Der meistgewählte Wunsch wird zur echten Funktion der Maschine.",
     "wishes.placeholder": "Eine Pizza, die…",
     "wishes.submit": "In den Ofen",
     "wishes.counter": "Wünsche im Ofen",
-    "wishes.confirm": "🔥 Super, dein Wunsch bäckt gerade.",
+    "wishes.confirm": "🔥 Danke! Dein Wunsch wird geprüft. Wird er freigegeben, erscheint er hier.",
     "wishes.seed": [
       "Eine frittierte Pizza um 2 Uhr nachts",
       "Ein Slider für die Krusten-Knusprigkeit",
@@ -681,11 +681,11 @@ window.I18N = {
 
     "wishes.eyebrow": "願いのオーブン",
     "wishes.title": "PIZZAIOにひそかにやってほしいことは？",
-    "wishes.lead": "願いをオーブンに入れてください。毎月ひとつを実現します — 最も票を集めたアイデアがマシンの実機能になります。",
+    "wishes.lead": "願いをオーブンに入れてください。毎月チームが厳選してここに掲載します。最多票の願いはマシンの実機能になります。",
     "wishes.placeholder": "こんなピザ…",
     "wishes.submit": "オーブンへ",
     "wishes.counter": "個の願いが焼成中",
-    "wishes.confirm": "🔥 OK、あなたの願いを焼いています。",
+    "wishes.confirm": "🔥 ありがとう！あなたの願いは審査中です。承認されるとここに表示されます。",
     "wishes.seed": [
       "深夜2時に揚げピザ",
       "生地のサクサク度を調整するスライダー",

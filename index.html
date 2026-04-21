@@ -189,15 +189,12 @@
   .slot span.sel{background:var(--neon);color:#000;border-color:var(--neon)}
   .phone-cta{margin-top:auto;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--neon-2));color:#05050f;font-weight:700;text-align:center;font-size:13px}
 
-  /* Wishes section */
   #wishes{
     background:
       radial-gradient(800px 300px at 80% 0%, rgba(255,90,31,.12), transparent 60%),
       radial-gradient(600px 300px at 20% 100%, rgba(255,176,32,.08), transparent 60%);
   }
-  .wish-form{
-    display:flex;gap:8px;margin-top:36px;max-width:680px;flex-wrap:wrap;
-  }
+  .wish-form{display:flex;gap:8px;margin-top:36px;max-width:680px;flex-wrap:wrap}
   .wish-form input{
     flex:1;min-width:240px;padding:16px 20px;border-radius:999px;
     background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);
@@ -206,10 +203,7 @@
   .wish-form input:focus{outline:none;border-color:var(--heat);box-shadow:0 0 0 4px rgba(255,90,31,.14)}
   .wish-counter{margin-top:20px;color:var(--ink-dim);font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
   .wish-counter b{color:var(--heat);font-size:18px;font-weight:700;margin-right:6px}
-  .wish-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;
-    position:relative;
-  }
+  .wish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;position:relative}
   .wish-card{
     border:1px solid var(--line);border-radius:16px;padding:18px 20px;
     background:linear-gradient(180deg, rgba(255,90,31,.04), rgba(255,255,255,.01));
@@ -222,16 +216,10 @@
     content:"🔥";font-size:14px;flex-shrink:0;margin-top:1px;
     filter:drop-shadow(0 0 6px rgba(255,90,31,.6));
   }
-  .wish-card.mine{border-color:rgba(255,90,31,.45);background:linear-gradient(180deg, rgba(255,90,31,.1), rgba(255,176,32,.04))}
-  .wish-card.mine::before{content:"⭐"}
-  .wish-card.new{animation:wishIn .7s cubic-bezier(.2,.8,.2,1)}
-  @keyframes wishIn{
-    0%{opacity:0;transform:translateY(12px) scale(.96);box-shadow:0 0 40px rgba(255,90,31,.8)}
-    100%{opacity:1;transform:translateY(0) scale(1);box-shadow:0 0 0 rgba(255,90,31,0)}
-  }
   .wish-confirm{
     margin-top:14px;color:var(--heat-2);font-size:14px;font-weight:600;
     opacity:0;transform:translateY(-6px);transition:opacity .3s, transform .3s;
+    max-width:680px;
   }
   .wish-confirm.show{opacity:1;transform:translateY(0)}
 
@@ -712,12 +700,11 @@
     if (!grid || !counter) return;
     const seed = (window.I18N?.[lang]?.['wishes.seed']) || (window.I18N?.[DEFAULT_LANG]?.['wishes.seed']) || [];
     const mine = loadWishes();
-    const cards = [
-      ...mine.map(w => ({text:w, mine:true})),
-      ...seed.map(w => ({text:w, mine:false}))
-    ].slice(0, 12);
+    // Moderation: only curated seed wishes are displayed publicly.
+    // User submissions are stored locally and counted, never shown until approved.
+    const cards = seed.slice(0, 12);
     grid.innerHTML = cards.map(c =>
-      `<div class="wish-card${c.mine ? ' mine' : ''}">${escapeHTML(c.text)}</div>`
+      `<div class="wish-card">${escapeHTML(c)}</div>`
     ).join('');
     const base = 428;
     counter.textContent = (base + seed.length + mine.length).toLocaleString();
@@ -739,14 +726,12 @@
     saveWishes(mine.slice(0, 20));
     input.value = '';
     const lang = document.documentElement.getAttribute('data-lang') || DEFAULT_LANG;
-    renderWishes(lang);
-    const first = document.querySelector('#wish-grid .wish-card');
-    if (first) { first.classList.add('new'); setTimeout(()=>first.classList.remove('new'), 900); }
+    renderWishes(lang); // just refreshes the counter; user wishes are not rendered
     const conf = document.getElementById('wish-confirm');
     conf.textContent = t('wishes.confirm', lang);
     conf.classList.add('show');
-    setTimeout(()=>conf.classList.remove('show'), 3500);
-    // TODO: POST to backend when ready
+    setTimeout(()=>conf.classList.remove('show'), 5000);
+    // TODO: POST to moderation queue (Apps Script / Formspree / custom backend)
     return false;
   }
 
