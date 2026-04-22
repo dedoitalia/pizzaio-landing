@@ -5,9 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PIZZAIO — La prima pizzeria 100% autonoma</title>
 <meta name="description" content="PIZZAIO: la macchina che prepara pizze fresche dall'impasto al forno. Ordina dall'app, scegli l'orario di ritiro, mangia calda." />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#07070c" />
+<meta name="color-scheme" content="dark" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="PIZZAIO" />
+<meta property="og:title" content="PIZZAIO — La prima pizzeria 100% autonoma" />
+<meta property="og:description" content="Una macchina che impasta, stende, condisce e cuoce la tua pizza in meno di 4 minuti. Ordini dall'app, la ritiri calda al secondo." />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
+<meta property="og:locale:alternate" content="fr_FR" />
+<meta property="og:locale:alternate" content="de_DE" />
+<meta property="og:locale:alternate" content="ja_JP" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PIZZAIO — La prima pizzeria 100% autonoma" />
+<meta name="twitter:description" content="Impasto, stesura, cottura: 4 minuti. Zero pizzaiolo, pizza vera." />
+
+<!-- Inline SVG favicon -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2300e5ff'/%3E%3Cstop offset='.5' stop-color='%237c4dff'/%3E%3Cstop offset='1' stop-color='%23ff5a1f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%23070710'/%3E%3Ccircle cx='32' cy='32' r='18' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23f3d58a'/%3E%3Ccircle cx='27' cy='29' r='2.2' fill='%23c23b22'/%3E%3Ccircle cx='35' cy='28' r='1.8' fill='%23c23b22'/%3E%3Ccircle cx='34' cy='35' r='1.8' fill='%23c23b22'/%3E%3C/svg%3E" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#07070c;
@@ -30,6 +54,25 @@
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;letter-spacing:.02em}
   .container{max-width:1240px;margin:0 auto;padding:0 24px}
   .wrap{position:relative;z-index:1}
+
+  /* Focus visible on dark background, keyboard navigation only */
+  :focus{outline:none}
+  :focus-visible{outline:2px solid var(--neon);outline-offset:3px;border-radius:4px}
+  .btn:focus-visible{outline-offset:4px}
+
+  /* Skip link for screen reader / keyboard */
+  .skip-link{
+    position:absolute;left:-9999px;top:0;z-index:100;
+    background:var(--neon);color:#05050f;padding:10px 16px;border-radius:0 0 8px 0;
+    font-weight:700;font-size:14px;
+  }
+  .skip-link:focus{left:0}
+
+  /* Hide visually, leave available to screen readers */
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
 
   .bg-grid{
     position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -189,12 +232,15 @@
   .slot span.sel{background:var(--neon);color:#000;border-color:var(--neon)}
   .phone-cta{margin-top:auto;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--neon-2));color:#05050f;font-weight:700;text-align:center;font-size:13px}
 
+  /* Wishes section */
   #wishes{
     background:
       radial-gradient(800px 300px at 80% 0%, rgba(255,90,31,.12), transparent 60%),
       radial-gradient(600px 300px at 20% 100%, rgba(255,176,32,.08), transparent 60%);
   }
-  .wish-form{display:flex;gap:8px;margin-top:36px;max-width:680px;flex-wrap:wrap}
+  .wish-form{
+    display:flex;gap:8px;margin-top:36px;max-width:680px;flex-wrap:wrap;
+  }
   .wish-form input{
     flex:1;min-width:240px;padding:16px 20px;border-radius:999px;
     background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);
@@ -203,7 +249,10 @@
   .wish-form input:focus{outline:none;border-color:var(--heat);box-shadow:0 0 0 4px rgba(255,90,31,.14)}
   .wish-counter{margin-top:20px;color:var(--ink-dim);font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
   .wish-counter b{color:var(--heat);font-size:18px;font-weight:700;margin-right:6px}
-  .wish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;position:relative}
+  .wish-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;
+    position:relative;
+  }
   .wish-card{
     border:1px solid var(--line);border-radius:16px;padding:18px 20px;
     background:linear-gradient(180deg, rgba(255,90,31,.04), rgba(255,255,255,.01));
@@ -216,10 +265,16 @@
     content:"🔥";font-size:14px;flex-shrink:0;margin-top:1px;
     filter:drop-shadow(0 0 6px rgba(255,90,31,.6));
   }
+  .wish-card.mine{border-color:rgba(255,90,31,.45);background:linear-gradient(180deg, rgba(255,90,31,.1), rgba(255,176,32,.04))}
+  .wish-card.mine::before{content:"⭐"}
+  .wish-card.new{animation:wishIn .7s cubic-bezier(.2,.8,.2,1)}
+  @keyframes wishIn{
+    0%{opacity:0;transform:translateY(12px) scale(.96);box-shadow:0 0 40px rgba(255,90,31,.8)}
+    100%{opacity:1;transform:translateY(0) scale(1);box-shadow:0 0 0 rgba(255,90,31,0)}
+  }
   .wish-confirm{
     margin-top:14px;color:var(--heat-2);font-size:14px;font-weight:600;
     opacity:0;transform:translateY(-6px);transition:opacity .3s, transform .3s;
-    max-width:680px;
   }
   .wish-confirm.show{opacity:1;transform:translateY(0)}
 
@@ -271,6 +326,138 @@
   footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
   footer a:hover{color:var(--ink)}
 
+  /* ================= Partner / ROI-OEE Simulator ================= */
+  #partner{
+    background:
+      radial-gradient(900px 400px at 10% 0%, rgba(0,229,255,.1), transparent 60%),
+      radial-gradient(700px 400px at 95% 100%, rgba(124,77,255,.12), transparent 60%);
+  }
+  .model-tabs{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;
+  }
+  .model-tab{
+    display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+    text-align:left;padding:20px 22px;border-radius:18px;
+    border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    transition:border-color .2s, transform .2s, background .2s;
+  }
+  .model-tab:hover{border-color:rgba(0,229,255,.3);transform:translateY(-2px)}
+  .model-tab.active{
+    border-color:rgba(0,229,255,.55);
+    background:linear-gradient(180deg, rgba(0,229,255,.07), rgba(124,77,255,.05));
+    box-shadow:inset 0 0 0 1px rgba(0,229,255,.15), 0 10px 40px rgba(0,229,255,.08);
+  }
+  .model-tab-num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);
+    letter-spacing:.15em;
+  }
+  .model-tab-title{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .model-tab-ticket{font-size:12px;color:var(--ink-dim);font-family:'JetBrains Mono',monospace}
+
+  .sim-wrap{
+    display:grid;grid-template-columns:1fr 1.1fr;gap:28px;margin-top:28px;
+    border:1px solid var(--line);border-radius:22px;padding:28px;
+    background:linear-gradient(180deg, rgba(13,13,22,.7), rgba(13,13,22,.4));
+  }
+  .sim-panel-title{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-dim);margin-bottom:16px;
+  }
+  .slider-group{margin-bottom:18px}
+  .slider-group label{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:13px;color:var(--ink-dim);margin-bottom:6px;
+  }
+  .slider-group label .slider-val{
+    font-family:'JetBrains Mono',monospace;color:var(--ink);font-size:14px;font-weight:600;
+  }
+  .sim-range{
+    -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:999px;
+    background:rgba(255,255,255,.1);outline:none;
+  }
+  .sim-range::-webkit-slider-thumb{
+    -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+    background:linear-gradient(135deg,var(--neon),var(--neon-2));
+    cursor:pointer;box-shadow:0 2px 10px rgba(0,229,255,.5);
+    transition:transform .1s;
+  }
+  .sim-range::-webkit-slider-thumb:hover{transform:scale(1.2)}
+  .sim-range::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;border:none;
+    background:linear-gradient(135deg,var(--neon),var(--neon-2));
+    cursor:pointer;box-shadow:0 2px 10px rgba(0,229,255,.5);
+  }
+  .oee-result{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 16px;margin:8px 0 22px;border-radius:12px;
+    background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);
+  }
+  .oee-result .lbl{font-size:12px;color:var(--ink-dim);letter-spacing:.08em;text-transform:uppercase}
+  .oee-result .val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:800;color:var(--neon)}
+
+  .sim-results{
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .big-result{
+    padding:22px 24px;border-radius:16px;
+    background:linear-gradient(135deg, rgba(255,90,31,.12), rgba(255,176,32,.06));
+    border:1px solid rgba(255,90,31,.25);
+  }
+  .big-result-num{
+    font-size:clamp(32px,4vw,44px);font-weight:800;letter-spacing:-.02em;
+    background:linear-gradient(135deg,var(--heat-2),var(--heat));
+    -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;
+  }
+  .big-result-lbl{font-size:13px;color:var(--ink-dim);margin-top:6px}
+  .sub-results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .sub-result{
+    padding:16px 14px;border-radius:12px;
+    border:1px solid var(--line);background:rgba(255,255,255,.02);
+  }
+  .sub-result-num{font-size:20px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+  .sub-result-lbl{font-size:11px;color:var(--ink-dim);margin-top:4px;letter-spacing:.04em}
+  .sim-hook{
+    padding:14px 16px;border-radius:12px;
+    background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.25);
+    font-size:14px;color:var(--ok);font-weight:500;line-height:1.45;
+  }
+  .sim-hook::before{content:"✦ ";font-weight:800}
+
+  details.sim-details{
+    border:1px solid var(--line);border-radius:12px;padding:0;
+    background:rgba(0,0,0,.15);margin-top:4px;
+  }
+  details.sim-details>summary{
+    list-style:none;cursor:pointer;padding:14px 18px;font-size:13px;font-weight:600;
+    color:var(--neon);display:flex;justify-content:space-between;align-items:center;
+  }
+  details.sim-details>summary::-webkit-details-marker{display:none}
+  details.sim-details>summary::after{content:"+";font-size:18px;transition:transform .2s}
+  details.sim-details[open]>summary::after{transform:rotate(45deg)}
+  .pl-box{padding:0 18px 18px;font-size:12px}
+  .pl-table{width:100%;border-collapse:collapse;margin-top:4px}
+  .pl-table th,.pl-table td{
+    padding:8px 6px;text-align:right;border-bottom:1px solid rgba(255,255,255,.05);
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+  }
+  .pl-table th:first-child,.pl-table td:first-child{text-align:left;color:var(--ink-dim);font-family:inherit}
+  .pl-table thead th{color:var(--ink-dim);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+  .pl-table tr.total td{font-weight:700;color:var(--ink);border-top:1px solid rgba(255,255,255,.15)}
+  .sensitivity{margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.08)}
+  .sensitivity-title{font-size:11px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .sens-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .sens-row{
+    display:flex;justify-content:space-between;padding:8px 10px;border-radius:8px;
+    background:rgba(255,255,255,.02);font-size:12px;
+  }
+  .sens-row b{font-family:'JetBrains Mono',monospace;color:var(--heat-2);font-weight:700}
+
+  .partner-cta{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+  .partner-disclaimer{
+    max-width:760px;font-size:12px;color:var(--ink-dim);line-height:1.55;
+    font-family:'JetBrains Mono',monospace;letter-spacing:.01em;
+  }
+
   @media (max-width:880px){
     .hero-row{grid-template-columns:1fr}
     .machine{max-width:380px;margin:20px auto 0}
@@ -280,17 +467,36 @@
     .stats{grid-template-columns:repeat(2,1fr)}
     .wish-grid{grid-template-columns:1fr}
     .nav-links{display:none}
+    .model-tabs{grid-template-columns:1fr}
+    .sim-wrap{grid-template-columns:1fr;padding:22px}
+    .sub-results{grid-template-columns:1fr}
+    .sens-grid{grid-template-columns:1fr}
+  }
+
+  /* Respect system-level reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+      scroll-behavior:auto !important;
+    }
+    .ticker-track{animation:none !important;transform:none !important}
+    .spin-slow{animation:none !important}
+    .pulse{animation:none !important;opacity:.85}
   }
 </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="bg-glow"></div>
+<a href="#main-content" class="skip-link" data-i18n="a11y.skip">Vai al contenuto</a>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
 
 <div class="wrap">
 
-<nav class="top">
+<nav class="top" aria-label="Primary">
   <div class="container bar">
     <a href="#" class="logo">
       <span class="logo-mark"></span>
@@ -300,6 +506,7 @@
       <a href="#how" data-i18n="nav.how">Come funziona</a>
       <a href="#features" data-i18n="nav.tech">Tecnologia</a>
       <a href="#app" data-i18n="nav.app">App</a>
+      <a href="#partner" data-i18n="nav.partner">Partner</a>
       <a href="#wishes" data-i18n="nav.wishes">Desideri</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </div>
@@ -319,438 +526,4 @@
   </div>
 </nav>
 
-<section class="hero">
-  <div class="container hero-row">
-    <div>
-      <span class="chip">
-        <span class="dot"></span>
-        <span class="mono" data-i18n="hero.chip">LANCIO Q3 2027 · FIRENZE</span>
-      </span>
-      <h1 class="display">
-        <span data-i18n="hero.h1.1">La prima pizzeria</span><br/>
-        <span class="grad" data-i18n="hero.h1.2">100% autonoma.</span>
-      </h1>
-      <p class="sub" data-i18n="hero.sub">Una macchina intelligente che impasta, stende, condisce e cuoce la tua pizza in meno di 4 minuti. Ordini dall'app, scegli quando ritirare, la trovi calda al secondo.</p>
-      <div class="hero-cta">
-        <a href="#waitlist" class="btn btn-primary">
-          <span data-i18n="hero.cta.waitlist">Iscriviti alla waitlist</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a href="#how" class="btn btn-ghost">
-          <span data-i18n="hero.cta.how">Guarda come funziona</span>
-        </a>
-      </div>
-      <div class="hero-meta">
-        <div><b>&lt; 4 min</b><span data-i18n="hero.meta.1">dall'ordine al ritiro</span></div>
-        <div><b>450°C</b><span data-i18n="hero.meta.2">cottura stone oven</span></div>
-        <div><b>24/7</b><span data-i18n="hero.meta.3">sempre accesa</span></div>
-      </div>
-    </div>
-
-    <div class="machine">
-      <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="body" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stop-color="#1a1a28"/>
-            <stop offset="1" stop-color="#0a0a14"/>
-          </linearGradient>
-          <radialGradient id="oven" cx="50%" cy="50%" r="50%">
-            <stop offset="0" stop-color="#ffb020"/>
-            <stop offset="0.4" stop-color="#ff5a1f"/>
-            <stop offset="1" stop-color="#4a1500"/>
-          </radialGradient>
-          <linearGradient id="edge" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stop-color="#00e5ff"/>
-            <stop offset="1" stop-color="#7c4dff"/>
-          </linearGradient>
-        </defs>
-        <rect x="40" y="30" width="320" height="360" rx="28" fill="url(#body)" stroke="url(#edge)" stroke-width="1.5"/>
-        <rect x="54" y="44" width="292" height="332" rx="20" fill="none" stroke="rgba(255,255,255,.06)"/>
-        <rect x="76" y="62" width="248" height="64" rx="10" fill="#000" stroke="rgba(0,229,255,.3)"/>
-        <text x="90" y="88" font-family="JetBrains Mono,monospace" font-size="10" fill="#00e5ff">PIZZAIO v2.6 · ONLINE</text>
-        <text x="90" y="110" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#f4f3ff">READY · 3 IN QUEUE</text>
-        <circle cx="310" cy="94" r="4" fill="#2dd4bf"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>
-        <circle cx="200" cy="230" r="92" fill="url(#oven)"/>
-        <circle cx="200" cy="230" r="92" fill="none" stroke="#ff5a1f" stroke-width="2" opacity=".6"/>
-        <circle cx="200" cy="230" r="102" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
-        <g class="spin-slow" style="transform-origin:200px 230px">
-          <circle cx="200" cy="230" r="58" fill="#f3d58a" opacity=".95"/>
-          <circle cx="200" cy="230" r="58" fill="none" stroke="#8a4a1a" stroke-width="3"/>
-          <circle cx="184" cy="216" r="6" fill="#c23b22"/>
-          <circle cx="216" cy="214" r="5" fill="#c23b22"/>
-          <circle cx="210" cy="244" r="5" fill="#c23b22"/>
-          <circle cx="186" cy="248" r="4" fill="#c23b22"/>
-          <circle cx="200" cy="224" r="3" fill="#f4f3ff"/>
-          <circle cx="192" cy="236" r="3" fill="#f4f3ff"/>
-          <circle cx="220" cy="230" r="3" fill="#f4f3ff"/>
-        </g>
-        <g opacity=".5" class="pulse">
-          <path d="M150 160 q8 -10 0 -20 q-8 -10 0 -20" stroke="#ffb020" stroke-width="1.5" fill="none"/>
-          <path d="M200 150 q8 -10 0 -20 q-8 -10 0 -20" stroke="#ffb020" stroke-width="1.5" fill="none"/>
-          <path d="M250 160 q8 -10 0 -20 q-8 -10 0 -20" stroke="#ffb020" stroke-width="1.5" fill="none"/>
-        </g>
-        <rect x="96" y="335" width="208" height="28" rx="6" fill="#000" stroke="rgba(0,229,255,.25)"/>
-        <line x1="110" y1="349" x2="290" y2="349" stroke="rgba(0,229,255,.35)" stroke-width="1" stroke-dasharray="4 4"/>
-        <text x="200" y="378" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,255,255,.4)">PICKUP SLOT</text>
-        <text x="60" y="50" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,.3)">#PZ-0421</text>
-        <text x="340" y="50" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(255,255,255,.3)">FI·01</text>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<div class="ticker">
-  <div class="ticker-track" id="ticker-track"></div>
-</div>
-
-<section id="how">
-  <div class="container">
-    <span class="eyebrow" data-i18n="how.eyebrow">COME FUNZIONA</span>
-    <h2 class="section-title" data-i18n="how.title">Dal tap alla prima fetta. Tutto in 4 minuti.</h2>
-    <p class="section-lead" data-i18n="how.lead">Quattro step automatici, una sola scelta per te: quando averla in mano.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 10h8M8 14h5"/></svg></div>
-        <div class="num">01 / ORDER</div>
-        <h3 data-i18n="step.1.title">Ordina dall'app</h3>
-        <p data-i18n="step.1.desc">Scegli la pizza, personalizza gli ingredienti, prenota lo slot di ritiro al minuto.</p>
-      </div>
-      <div class="step">
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12c2-2 6-2 8 0"/></svg></div>
-        <div class="num">02 / DOUGH</div>
-        <h3 data-i18n="step.2.title">Impasto fresco</h3>
-        <p data-i18n="step.2.desc">Impastatrice interna: farina, acqua, lievito madre, sale. Stesura automatica al micron.</p>
-      </div>
-      <div class="step">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 17c4-8 12-8 16 0"/><circle cx="8" cy="11" r="1.5"/><circle cx="12" cy="9" r="1.5"/><circle cx="16" cy="11" r="1.5"/></svg></div>
-        <div class="num">03 / TOPPING</div>
-        <h3 data-i18n="step.3.title">Condimento a dosi</h3>
-        <p data-i18n="step.3.desc">Dispenser calibrati per ogni ingrediente: stessa ricetta, sempre. Tracciabilità per lotto.</p>
-      </div>
-      <div class="step">
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 18h16M6 18V8a6 6 0 0112 0v10"/><path d="M9 14c1-2 5-2 6 0"/></svg></div>
-        <div class="num">04 / BAKE</div>
-        <h3 data-i18n="step.4.title">Forno a pietra 450°C</h3>
-        <p data-i18n="step.4.desc">Cottura in 90 secondi, crosta croccante, cuore morbido. Sportello pickup sincronizzato con l'app.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="features" style="background:linear-gradient(180deg, transparent, rgba(124,77,255,.04), transparent)">
-  <div class="container">
-    <span class="eyebrow" data-i18n="features.eyebrow">TECNOLOGIA</span>
-    <h2 class="section-title" data-i18n="features.title">La tecnologia che rende possibile una pizza vera senza un pizzaiolo.</h2>
-    <div class="features">
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 00-5 5v2a5 5 0 1010 0V7a5 5 0 00-5-5z"/><path d="M5 14l7 8 7-8"/></svg></div>
-        <h3 data-i18n="feat.1.title">AI di lievitazione</h3>
-        <p data-i18n="feat.1.desc">Un modello addestrato su migliaia di impasti regola temperatura e umidità minuto per minuto.</p>
-      </div>
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3 data-i18n="feat.2.title">Slot precisi al minuto</h3>
-        <p data-i18n="feat.2.desc">Il sistema coordina coda, cottura e apertura sportello così la tua pizza è calda quando arrivi.</p>
-      </div>
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11z"/><path d="M9 20v-6h6v6"/></svg></div>
-        <h3 data-i18n="feat.3.title">Scalabile ovunque</h3>
-        <p data-i18n="feat.3.desc">3 m², presa trifase, rete dati. Si installa in stazioni, uffici, hotel, campus, autogrill.</p>
-      </div>
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
-        <h3 data-i18n="feat.4.title">Ricette firmate</h3>
-        <p data-i18n="feat.4.desc">Pizzaioli campioni hanno codificato le ricette in profili digitali che la macchina esegue fedelmente.</p>
-      </div>
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="M8 15h3"/></svg></div>
-        <h3 data-i18n="feat.5.title">Pagamento invisibile</h3>
-        <p data-i18n="feat.5.desc">Apple Pay, Google Pay, carta, buoni pasto. Un tap, nessuna fila alla cassa.</p>
-      </div>
-      <div class="feat">
-        <div class="dotico"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4 12H2M22 12h-2M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg></div>
-        <h3 data-i18n="feat.6.title">Manutenzione predittiva</h3>
-        <p data-i18n="feat.6.desc">Sensori IoT monitorano ogni componente: l'operatore arriva prima che qualcosa si rompa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="app">
-  <div class="container">
-    <span class="eyebrow" data-i18n="app.eyebrow">L'APP</span>
-    <h2 class="section-title" data-i18n="app.title">Prenota lo slot. Arriva. Mangia calda.</h2>
-    <p class="section-lead" data-i18n="app.lead">Niente più attese casuali: l'app calcola la coda e ti propone l'orario più vicino a quando vuoi tu. La cottura parte al momento giusto perché la tua pizza sia pronta esattamente all'orario scelto.</p>
-    <div class="app-wrap">
-      <div class="phone">
-        <div class="phone-screen">
-          <div class="phone-h">PIZZAIO · FIRENZE S.M.N.</div>
-          <div class="phone-title" data-i18n="app.phone.title">Scegli il ritiro</div>
-          <div class="phone-card">
-            <div class="row"><span class="big">Margherita DOP</span><span class="big">€7,90</span></div>
-            <div class="row"><span class="sm" data-i18n="app.phone.dough">Impasto 24h · Bufala</span><span class="sm">· 1</span></div>
-          </div>
-          <div class="phone-card">
-            <div class="row"><span class="big">Diavola+</span><span class="big">€9,50</span></div>
-            <div class="row"><span class="sm" data-i18n="app.phone.salami">Salame piccante · extra</span><span class="sm">· 1</span></div>
-          </div>
-          <div class="phone-card">
-            <div class="row"><span class="sm" data-i18n="app.phone.pickup">RITIRO ALLE</span><span class="sm">21 APR</span></div>
-            <div class="slot">
-              <span>19:10</span><span>19:15</span><span class="sel">19:20</span><span>19:25</span><span>19:30</span>
-            </div>
-          </div>
-          <div class="phone-cta" data-i18n="app.phone.confirm">Conferma · €17,40</div>
-        </div>
-      </div>
-      <div>
-        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px">
-          <div style="min-width:32px;height:32px;border-radius:8px;background:rgba(0,229,255,.12);display:flex;align-items:center;justify-content:center;color:var(--neon);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px">1</div>
-          <div>
-            <h3 style="font-size:18px;margin-bottom:6px" data-i18n="app.bullet.1.title">Slot precisi, zero file</h3>
-            <p style="color:var(--ink-dim);font-size:14px;line-height:1.55" data-i18n="app.bullet.1.desc">Scegli l'orario esatto di ritiro e ricevi notifica quando la pizza entra in forno.</p>
-          </div>
-        </div>
-        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px">
-          <div style="min-width:32px;height:32px;border-radius:8px;background:rgba(124,77,255,.15);display:flex;align-items:center;justify-content:center;color:var(--neon-2);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px">2</div>
-          <div>
-            <h3 style="font-size:18px;margin-bottom:6px" data-i18n="app.bullet.2.title">Codice QR dinamico</h3>
-            <p style="color:var(--ink-dim);font-size:14px;line-height:1.55" data-i18n="app.bullet.2.desc">Lo sportello si apre solo per te, solo nell'intervallo scelto. Niente ritiri sbagliati.</p>
-          </div>
-        </div>
-        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px">
-          <div style="min-width:32px;height:32px;border-radius:8px;background:rgba(255,90,31,.15);display:flex;align-items:center;justify-content:center;color:var(--heat);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px">3</div>
-          <div>
-            <h3 style="font-size:18px;margin-bottom:6px" data-i18n="app.bullet.3.title">Preferiti e ricorrenti</h3>
-            <p style="color:var(--ink-dim);font-size:14px;line-height:1.55" data-i18n="app.bullet.3.desc">Ordine del venerdì sera in 2 tap. Ogni settimana, in automatico.</p>
-          </div>
-        </div>
-        <div style="display:flex;gap:16px;align-items:flex-start">
-          <div style="min-width:32px;height:32px;border-radius:8px;background:rgba(45,212,191,.15);display:flex;align-items:center;justify-content:center;color:var(--ok);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:13px">4</div>
-          <div>
-            <h3 style="font-size:18px;margin-bottom:6px" data-i18n="app.bullet.4.title">Trovi la tua PIZZAIO vicina</h3>
-            <p style="color:var(--ink-dim);font-size:14px;line-height:1.55" data-i18n="app.bullet.4.desc">Mappa live con stato forno, coda in tempo reale e primo slot disponibile.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="wishes">
-  <div class="container">
-    <span class="eyebrow" data-i18n="wishes.eyebrow">IL FORNO DEI DESIDERI</span>
-    <h2 class="section-title" data-i18n="wishes.title">Cosa vorresti che PIZZAIO facesse?</h2>
-    <p class="section-lead" data-i18n="wishes.lead">Butta un desiderio nel forno.</p>
-
-    <form class="wish-form" onsubmit="return onWishSubmit(event)">
-      <input id="wish-input" type="text" maxlength="140" required
-             data-i18n-attr="placeholder:wishes.placeholder"
-             placeholder="Una pizza che…" />
-      <button type="submit" class="btn btn-heat">
-        <span data-i18n="wishes.submit">Metti nel forno</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-    </form>
-
-    <div class="wish-confirm" id="wish-confirm"></div>
-
-    <div class="wish-counter">
-      <b id="wish-count">0</b><span data-i18n="wishes.counter">desideri nel forno</span>
-    </div>
-
-    <div class="wish-grid" id="wish-grid"></div>
-  </div>
-</section>
-
-<section style="padding:60px 0">
-  <div class="container">
-    <div class="stats">
-      <div class="stat"><div class="v">&lt; 4'</div><div class="l" data-i18n="stats.1.label">tempo medio ordine→ritiro</div></div>
-      <div class="stat"><div class="v">90"</div><div class="l" data-i18n="stats.2.label">cottura forno a pietra</div></div>
-      <div class="stat"><div class="v">24/7</div><div class="l" data-i18n="stats.3.label">sempre operativa</div></div>
-      <div class="stat"><div class="v">€7,90</div><div class="l" data-i18n="stats.4.label">Margherita DOP di partenza</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="container">
-    <span class="eyebrow" data-i18n="faq.eyebrow">DOMANDE FREQUENTI</span>
-    <h2 class="section-title" data-i18n="faq.title">Tutto quello che vi state chiedendo.</h2>
-    <div class="faq">
-      <details class="q" open>
-        <summary data-i18n="faq.q1">È davvero pizza fresca, non surgelata?</summary>
-        <p data-i18n="faq.a1">Sì. L'impasto viene preparato e rigenerato internamente ogni 6 ore partendo da farina, acqua, lievito madre e sale. Gli ingredienti freschi vengono riforniti quotidianamente da un operatore.</p>
-      </details>
-      <details class="q">
-        <summary data-i18n="faq.q2">Dove saranno installate le prime PIZZAIO?</summary>
-        <p data-i18n="faq.a2">Pilotiamo a Firenze nel Q3 2027 in 3 location ad alto traffico: stazione Santa Maria Novella, campus universitario e hub uffici. Poi Milano e Bologna entro fine 2027.</p>
-      </details>
-      <details class="q">
-        <summary data-i18n="faq.q3">Quanto costa una pizza?</summary>
-        <p data-i18n="faq.a3">Margherita DOP da €7,90. Le specialità partono da €9,50. Prezzi ottimizzati grazie all'automazione: qualità da pizzeria, prezzo da street food.</p>
-      </details>
-      <details class="q">
-        <summary data-i18n="faq.q4">Cosa succede se il forno si blocca?</summary>
-        <p data-i18n="faq.a4">Rimborso automatico via app in meno di 60 secondi e notifica con la PIZZAIO attiva più vicina. Il 98% dei guasti viene previsto e risolto prima che tu te ne accorga.</p>
-      </details>
-      <details class="q">
-        <summary data-i18n="faq.q5">Posso proporre la mia location?</summary>
-        <p data-i18n="faq.a5">Sì. Stazioni, hub aziendali, centri commerciali, hotel, università: scrivici a partners@pizzaio.it per valutare una PIZZAIO nel tuo spazio.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section id="waitlist">
-  <div class="container">
-    <div class="waitlist-wrap">
-      <span class="chip"><span class="dot"></span><span class="mono" data-i18n="waitlist.chip">POSTI LIMITATI · EARLY ACCESS</span></span>
-      <h2 data-i18n="waitlist.title">Sii tra i primi a morderla.</h2>
-      <p data-i18n="waitlist.sub">Iscriviti alla waitlist…</p>
-      <form class="wl" onsubmit="return onWaitlist(event)">
-        <input type="email" required id="wl-email"
-               data-i18n-attr="placeholder:waitlist.email"
-               placeholder="tu@email.com" />
-        <button type="submit" class="btn btn-primary">
-          <span data-i18n="waitlist.cta">Entra in waitlist</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </form>
-      <div class="wl-meta" id="wl-meta" data-i18n="waitlist.meta">Nessuno spam. Disiscrizione con un tap.</div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container row">
-    <div class="logo"><span class="logo-mark"></span><span>PIZZAIO</span></div>
-    <div class="row" style="gap:24px">
-      <a href="#" data-i18n="footer.privacy">Privacy</a>
-      <a href="#" data-i18n="footer.terms">Termini</a>
-      <a href="mailto:hello@pizzaio.it">hello@pizzaio.it</a>
-      <a href="mailto:partners@pizzaio.it">partners@pizzaio.it</a>
-    </div>
-    <div data-i18n="footer.copy">© 2026 PIZZAIO — Made in Italy</div>
-  </div>
-</footer>
-
-</div>
-
-<script src="translations.js"></script>
-<script>
-  const DEFAULT_LANG = 'it';
-  const SUPPORTED = ['it','en','es','fr','de','ja'];
-
-  function t(key, lang) {
-    const L = window.I18N || {};
-    return (L[lang] && L[lang][key]) ?? (L[DEFAULT_LANG] && L[DEFAULT_LANG][key]) ?? '';
-  }
-
-  function applyI18n(lang){
-    document.documentElement.setAttribute('lang', lang);
-    document.documentElement.setAttribute('data-lang', lang);
-    document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const v = t(el.getAttribute('data-i18n'), lang);
-      if (v) el.innerHTML = v;
-    });
-    document.querySelectorAll('[data-i18n-attr]').forEach(el=>{
-      el.getAttribute('data-i18n-attr').split(';').forEach(pair=>{
-        const [attr,key] = pair.split(':').map(s=>s.trim());
-        const v = t(key, lang);
-        if (attr && v) el.setAttribute(attr, v);
-      });
-    });
-    buildTicker(lang);
-    renderWishes(lang);
-    try { localStorage.setItem('pz_lang', lang); } catch(e){}
-    document.getElementById('lang-select').value = lang;
-  }
-
-  function detectLang(){
-    try {
-      const saved = localStorage.getItem('pz_lang');
-      if (saved && SUPPORTED.includes(saved)) return saved;
-    } catch(e){}
-    const nav = (navigator.language || 'it').slice(0,2).toLowerCase();
-    return SUPPORTED.includes(nav) ? nav : DEFAULT_LANG;
-  }
-
-  function buildTicker(lang){
-    const track = document.getElementById('ticker-track');
-    if (!track) return;
-    const items = ['ticker.1','ticker.2','ticker.3','ticker.4','ticker.5','ticker.6'];
-    const html = [...items, ...items].map(k => `<span>${t(k, lang)}</span><span>·</span>`).join('');
-    track.innerHTML = html;
-  }
-
-  const WISH_STORE_KEY = 'pz_wishes_v1';
-  function loadWishes(){
-    try { return JSON.parse(localStorage.getItem(WISH_STORE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function saveWishes(arr){
-    try { localStorage.setItem(WISH_STORE_KEY, JSON.stringify(arr)); } catch(e){}
-  }
-
-  function renderWishes(lang){
-    const grid = document.getElementById('wish-grid');
-    const counter = document.getElementById('wish-count');
-    if (!grid || !counter) return;
-    const seed = (window.I18N?.[lang]?.['wishes.seed']) || (window.I18N?.[DEFAULT_LANG]?.['wishes.seed']) || [];
-    const mine = loadWishes();
-    // Moderation: only curated seed wishes are displayed publicly.
-    // User submissions are stored locally and counted, never shown until approved.
-    const cards = seed.slice(0, 12);
-    grid.innerHTML = cards.map(c =>
-      `<div class="wish-card">${escapeHTML(c)}</div>`
-    ).join('');
-    const base = 428;
-    counter.textContent = (base + seed.length + mine.length).toLocaleString();
-  }
-
-  function escapeHTML(s){
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[c]));
-  }
-
-  function onWishSubmit(e){
-    e.preventDefault();
-    const input = document.getElementById('wish-input');
-    const text = input.value.trim();
-    if (!text) return false;
-    const mine = loadWishes();
-    mine.unshift(text);
-    saveWishes(mine.slice(0, 20));
-    input.value = '';
-    const lang = document.documentElement.getAttribute('data-lang') || DEFAULT_LANG;
-    renderWishes(lang); // just refreshes the counter; user wishes are not rendered
-    const conf = document.getElementById('wish-confirm');
-    conf.textContent = t('wishes.confirm', lang);
-    conf.classList.add('show');
-    setTimeout(()=>conf.classList.remove('show'), 5000);
-    // TODO: POST to moderation queue (Apps Script / Formspree / custom backend)
-    return false;
-  }
-
-  function onWaitlist(e){
-    e.preventDefault();
-    const email = document.getElementById('wl-email').value.trim();
-    if (!email) return false;
-    const meta = document.getElementById('wl-meta');
-    const lang = document.documentElement.getAttribute('data-lang') || DEFAULT_LANG;
-    meta.textContent = t('waitlist.confirm', lang);
-    meta.style.color = 'var(--ok)';
-    document.getElementById('wl-email').value = '';
-    // TODO: POST to Mailchimp / Resend / ConvertKit
-    return false;
-  }
-
-  document.getElementById('lang-select').addEventListener('change', e => applyI18n(e.target.value));
-  applyI18n(detectLang());
-</script>
-
-</body>
-</html>
+<main id="main-content">
