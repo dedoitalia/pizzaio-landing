@@ -1020,7 +1020,7 @@ window.I18N = {
     "partner.sim.out.immediate": "即時",
     "partner.sim.out.revenueAgg": "集計年間売上",
     "partner.sim.out.ebitdaAgg": "集計月次EBITDA",
-    "partner.sim.hook.fast": "この仮���では{0}で回収 — 健全なユニットエコノミクスの典型。",
+    "partner.sim.hook.fast": "この仮定では{0}で回収 — 健全なユニットエコノミクスの典型。",
     "partner.sim.hook.medium": "{0}で回収 — 2台目の窯へ再投資する余裕もある堅実なライン。",
     "partner.sim.hook.solid": "回収{0}：保守的な数字でも、外食ではなくテックの利益率。",
     "partner.sim.hook.revshare": "CAPEXゼロ、月{0}のパッシブ収入。運営は私たち、あなたは受け取るだけ。",
@@ -1071,4 +1071,4 @@ window.I18N = {
     "footer.terms": "利用規約",
     "footer.copy": "© 2026 PIZZAIO — Made in Italy"
   }
-};
+}
