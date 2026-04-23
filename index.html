@@ -1129,19 +1129,53 @@
   }
 
   // ---------- Waitlist ----------
-  function onWaitlist(e){
+  // POST → pizzaio-waitlist-api (Render). La chiave Resend vive server-side.
+  const WAITLIST_ENDPOINT = 'https://pizzaio-waitlist-api.onrender.com/api/waitlist';
+
+  async function onWaitlist(e){
     e.preventDefault();
+    const form = e.currentTarget;
     const emailEl = document.getElementById('wl-email');
+    const meta = document.getElementById('wl-meta');
+    const btn = form.querySelector('button[type="submit"]');
     const email = emailEl.value.trim();
     if (!email) return;
 
-    const meta = document.getElementById('wl-meta');
     const lang = document.documentElement.getAttribute('lang') || DEFAULT_LANG;
-    meta.textContent = t('waitlist.confirm', lang);
-    meta.style.color = 'var(--ok)';
-    emailEl.value = '';
 
-    // TODO: POST a Mailchimp / Resend / ConvertKit / backend custom
+    btn.disabled = true;
+    emailEl.disabled = true;
+    meta.textContent = t('waitlist.loading', lang);
+    meta.style.color = 'var(--ink-dim)';
+
+    try {
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, lang, source: 'landing' })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        meta.textContent = t('waitlist.confirm', lang);
+        meta.style.color = 'var(--ok)';
+        emailEl.value = '';
+      } else if (res.status === 400) {
+        meta.textContent = t('waitlist.err.invalid', lang);
+        meta.style.color = 'var(--heat)';
+      } else if (res.status === 429) {
+        meta.textContent = t('waitlist.err.rate', lang);
+        meta.style.color = 'var(--heat)';
+      } else {
+        meta.textContent = t('waitlist.err.server', lang);
+        meta.style.color = 'var(--heat)';
+      }
+    } catch (err) {
+      meta.textContent = t('waitlist.err.network', lang);
+      meta.style.color = 'var(--heat)';
+    } finally {
+      btn.disabled = false;
+      emailEl.disabled = false;
+    }
   }
 
   // ---------- Partner: simulatore ROI / OEE ----------
