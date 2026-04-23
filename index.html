@@ -33,3 +33,575 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #07070c; color: #e0e0e0; line-height: 1.6; }
+
+/* Dark theme colors */
+:root {
+  --bg-primary: #07070c;
+  --bg-secondary: #0f0f1a;
+  --bg-tertiary: #16161f;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-cyan: #00e5ff;
+  --accent-purple: #7c4dff;
+  --accent-orange: #ff5a1f;
+  --accent-gold: #f3d58a;
+  --border-color: #2a2a3e;
+}
+
+html[data-lang="ja"] { font-family: 'Noto Sans JP', 'Inter', system-ui, -apple-system, sans-serif; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+button, a { font-family: inherit; }
+
+.skip-link { position: absolute; top: -40px; left: 0; background: var(--accent-cyan); color: var(--bg-primary); padding: 8px; text-decoration: none; z-index: 100; }
+.skip-link:focus { top: 0; }
+
+/* Buttons */
+button { background: var(--accent-cyan); color: var(--bg-primary); border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; }
+button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0, 229, 255, 0.3); }
+button:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
+button:active { transform: translateY(0); }
+
+/* Main navigation */
+header { display: flex; justify-content: space-between; align-items: center; padding: 24px 40px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: rgba(7, 7, 12, 0.95); backdrop-filter: blur(10px); z-index: 50; }
+
+header h1 { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1px; }
+
+header nav { display: flex; gap: 32px; }
+header a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+header a:hover, header a:focus { color: var(--accent-cyan); outline: none; }
+
+/* Hero Section */
+.hero { display: flex; align-items: center; justify-content: space-between; padding: 80px 40px; max-width: 1400px; margin: 0 auto; }
+.hero-content { flex: 1; max-width: 600px; }
+.hero h2 { font-size: 56px; font-weight: 800; margin-bottom: 24px; line-height: 1.2; }
+.hero p { font-size: 18px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.8; }
+.hero-cta { display: flex; gap: 16px; margin-bottom: 24px; }
+.hero-cta button { background: var(--accent-cyan); color: var(--bg-primary); }
+.hero-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+
+.hero-visual { flex: 1; display: flex; justify-content: center; position: relative; height: 500px; }
+.hero-visual svg { width: 100%; height: 100%; max-width: 500px; }
+
+/* Sections */
+section { padding: 80px 40px; border-bottom: 1px solid var(--border-color); }
+section h3 { font-size: 40px; font-weight: 800; margin-bottom: 48px; text-align: center; }
+
+/* Feature grid */
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; }
+.feature-card { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 32px; border-radius: 12px; transition: all 0.3s ease; }
+.feature-card:hover { border-color: var(--accent-cyan); transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0, 229, 255, 0.1); }
+.feature-card h4 { font-size: 18px; margin-bottom: 12px; }
+.feature-card p { color: var(--text-secondary); }
+
+/* Partner/Model cards */
+.models { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; }
+.model-card { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary)); border: 1px solid var(--border-color); padding: 32px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
+.model-card.active { border-color: var(--accent-cyan); background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(124, 77, 255, 0.1)); }
+.model-card:hover { border-color: var(--accent-cyan); }
+
+/* Simulator controls */
+.sim-controls { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
+.sim-row { display: flex; justify-content: space-between; align-items: center; }
+.sim-row label { font-weight: 600; flex: 1; }
+.sim-row input[type="range"] { flex: 2; margin: 0 16px; }
+.sim-row .value { font-family: 'JetBrains Mono'; flex: 1; text-align: right; color: var(--accent-cyan); }
+
+/* Waitlist form */
+.waitlist-form { max-width: 500px; margin: 0 auto; }
+.form-group { margin-bottom: 24px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+.form-group input { width: 100%; padding: 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 8px; font-size: 14px; }
+.form-group input:focus { outline: none; border-color: var(--accent-cyan); background: rgba(0, 229, 255, 0.05); }
+.form-status { padding: 12px 16px; border-radius: 8px; margin-top: 16px; text-align: center; display: none; }
+.form-status.show { display: block; }
+.form-status.success { background: rgba(0, 229, 255, 0.2); color: var(--accent-cyan); }
+.form-status.error { background: rgba(255, 90, 31, 0.2); color: var(--accent-orange); }
+
+/* Footer */
+footer { padding: 40px; text-align: center; color: var(--text-secondary); border-top: 1px solid var(--border-color); }
+footer a { color: var(--accent-cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* Language selector */
+.lang-selector { display: flex; gap: 8px; position: absolute; top: 20px; right: 40px; z-index: 40; }
+.lang-btn { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.lang-btn.active { background: var(--accent-cyan); color: var(--bg-primary); border-color: var(--accent-cyan); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  header { flex-direction: column; gap: 16px; padding: 16px; }
+  header nav { flex-direction: column; gap: 16px; }
+  .hero { flex-direction: column; padding: 40px 20px; }
+  .hero h2 { font-size: 36px; }
+  .hero-visual { height: 300px; }
+  section { padding: 40px 20px; }
+  section h3 { font-size: 28px; margin-bottom: 32px; }
+  .features, .models { grid-template-columns: 1fr; }
+  .sim-row { flex-direction: column; align-items: flex-start; }
+  .sim-row input[type="range"] { width: 100%; margin: 8px 0; }
+}
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link" data-i18n="skip-link">Skip to main content</a>
+
+<div class="lang-selector">
+  <button class="lang-btn active" data-lang="it">IT</button>
+  <button class="lang-btn" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="es">ES</button>
+  <button class="lang-btn" data-lang="fr">FR</button>
+  <button class="lang-btn" data-lang="de">DE</button>
+  <button class="lang-btn" data-lang="ja">JA</button>
+</div>
+
+<header role="banner">
+  <h1>PIZZAIO</h1>
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#features" data-i18n="nav.features">Features</a>
+    <a href="#partners" data-i18n="nav.partners">Partners</a>
+    <a href="#waitlist" data-i18n="nav.waitlist">Waitlist</a>
+  </nav>
+</header>
+
+<main id="main-content" role="main">
+  <!-- Hero Section -->
+  <section class="hero" role="region" aria-label="Hero section">
+    <div class="hero-content">
+      <h2 data-i18n="hero.title">La prima pizzeria 100% autonoma</h2>
+      <p data-i18n="hero.subtitle">Una macchina che impasta, stende, condisce e cuoce la tua pizza in meno di 4 minuti. Ordini dall'app, la ritiri calda al secondo.</p>
+      <div class="hero-cta">
+        <button id="hero-button" data-i18n="cta.join-waitlist">Unisciti alla waitlist</button>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00e5ff;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#7c4dff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ff5a1f;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ff5a1f;stop-opacity:0.3" />
+            <stop offset="100%" style="stop-color:#7c4dff;stop-opacity:0.3" />
+          </linearGradient>
+        </defs>
+        <!-- Machine body -->
+        <rect x="80" y="80" width="240" height="280" rx="20" fill="url(#grad1)" opacity="0.1" stroke="url(#grad1)" stroke-width="2"/>
+        <!-- Main chamber -->
+        <rect x="100" y="100" width="200" height="160" rx="12" fill="url(#grad2)" stroke="url(#grad1)" stroke-width="2"/>
+        <!-- Dough area -->
+        <circle cx="130" cy="150" r="25" fill="#f3d58a" opacity="0.8"/>
+        <text x="130" y="156" text-anchor="middle" font-size="12" fill="#07070c" font-weight="bold">DOUGH</text>
+        <!-- Topping area -->
+        <circle cx="200" cy="150" r="25" fill="#c23b22" opacity="0.8"/>
+        <text x="200" y="156" text-anchor="middle" font-size="12" fill="#e0e0e0" font-weight="bold">TOP</text>
+        <!-- Oven area -->
+        <circle cx="270" cy="150" r="25" fill="#ff5a1f" opacity="0.8"/>
+        <text x="270" y="156" text-anchor="middle" font-size="12" fill="#07070c" font-weight="bold">OVEN</text>
+        <!-- Display -->
+        <rect x="110" y="280" width="180" height="40" rx="4" fill="var(--bg-secondary)" stroke="url(#grad1)" stroke-width="1"/>
+        <text x="200" y="307" text-anchor="middle" font-size="14" fill="var(--accent-cyan)" font-weight="bold">3:45</text>
+        <!-- Base -->
+        <rect x="60" y="360" width="280" height="20" rx="4" fill="url(#grad1)" opacity="0.3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" role="region" aria-label="Features">
+    <h3 data-i18n="features.title">Come funziona</h3>
+    <div class="features">
+      <div class="feature-card">
+        <h4 data-i18n="features.fast.title">⚡ Veloce</h4>
+        <p data-i18n="features.fast.desc">Pizza pronta in 4 minuti dall'ordine. Zero code, zero compromessi di qualità.</p>
+      </div>
+      <div class="feature-card">
+        <h4 data-i18n="features.quality.title">🍕 Qualità</h4>
+        <p data-i18n="features.quality.desc">Ingredienti selezionati e ricetta perfezionata. Ogni pizza è identica e ottimale.</p>
+      </div>
+      <div class="feature-card">
+        <h4 data-i18n="features.available.title">🕐 Sempre aperto</h4>
+        <p data-i18n="features.available.desc">Disponibile 24/7. La macchina non ha pause, non ha giorni festivi.</p>
+      </div>
+      <div class="feature-card">
+        <h4 data-i18n="features.scalable.title">📈 Scalabile</h4>
+        <p data-i18n="features.scalable.desc">Un'unità ogni 50.000 abitanti. Modello di franchising replicabile.</p>
+      </div>
+      <div class="feature-card">
+        <h4 data-i18n="features.eco.title">🌱 Sostenibile</h4>
+        <p data-i18n="features.eco.desc">Consumo energetico ottimizzato. Zero sprechi di ingredienti.</p>
+      </div>
+      <div class="feature-card">
+        <h4 data-i18n="features.data.title">📊 Data-driven</h4>
+        <p data-i18n="features.data.desc">Tutti i dati di vendita e preferenze in tempo reale. Insights per ottimizzare.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Models Section -->
+  <section id="partners" role="region" aria-label="Partner models">
+    <h3 data-i18n="partners.title">Modelli di partnership</h3>
+    <div class="models">
+      <div class="model-card active" data-model="owner-operator" tabindex="0" role="button" aria-pressed="true" aria-label="Owner-operator model">
+        <h4 data-i18n="partners.owner-operator.title">Owner-Operator</h4>
+        <p data-i18n="partners.owner-operator.desc">Gestisci una singola unità e trattieni tutti i profitti.</p>
+        <div class="sim-controls">
+          <div class="sim-row">
+            <label for="oo-daily-sales" data-i18n="sim.daily-sales">Daily Sales</label>
+            <input type="range" id="oo-daily-sales" min="50" max="500" value="250" step="10" aria-label="Daily sales slider">
+            <span class="value" id="oo-daily-sales-value">€250</span>
+          </div>
+          <div class="sim-row">
+            <label for="oo-margin" data-i18n="sim.margin">Margin %</label>
+            <input type="range" id="oo-margin" min="10" max="60" value="40" step="5" aria-label="Margin percentage slider">
+            <span class="value" id="oo-margin-value">40%</span>
+          </div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px;">
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.daily-profit" style="padding: 8px 0;">Daily Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="oo-daily-profit">€100</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.monthly-profit" style="padding: 8px 0;">Monthly Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="oo-monthly-profit">€3.000</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.annual-profit" style="padding: 8px 0;">Annual Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="oo-annual-profit">€36.000</td>
+          </tr>
+          <tr>
+            <td data-i18n="sim.payback" style="padding: 8px 0; font-weight: 600; color: #f3d58a;">Payback</td>
+            <td style="text-align: right; padding: 8px 0; color: #f3d58a; font-weight: 600;" id="oo-payback">3.2y</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="model-card" data-model="revenue-share" tabindex="0" role="button" aria-pressed="false" aria-label="Revenue-share model">
+        <h4 data-i18n="partners.revenue-share.title">Revenue Share</h4>
+        <p data-i18n="partners.revenue-share.desc">Pizzaio fornisce la macchina. Voi gestite la location, dividiamo i profitti.</p>
+        <div class="sim-controls">
+          <div class="sim-row">
+            <label for="rs-daily-sales" data-i18n="sim.daily-sales">Daily Sales</label>
+            <input type="range" id="rs-daily-sales" min="100" max="800" value="400" step="10" aria-label="Daily sales slider">
+            <span class="value" id="rs-daily-sales-value">€400</span>
+          </div>
+          <div class="sim-row">
+            <label for="rs-pizzaio-share" data-i18n="sim.pizzaio-share">Pizzaio %</label>
+            <input type="range" id="rs-pizzaio-share" min="10" max="40" value="25" step="5" aria-label="Pizzaio share percentage slider">
+            <span class="value" id="rs-pizzaio-share-value">25%</span>
+          </div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px;">
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.daily-profit" style="padding: 8px 0;">Daily Profit (You)</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="rs-daily-profit">€300</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.monthly-profit" style="padding: 8px 0;">Monthly Profit (You)</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="rs-monthly-profit">€9.000</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.annual-profit" style="padding: 8px 0;">Annual Profit (You)</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="rs-annual-profit">€108.000</td>
+          </tr>
+          <tr>
+            <td data-i18n="sim.payback" style="padding: 8px 0; font-weight: 600; color: #f3d58a;">Payback (Zero)</td>
+            <td style="text-align: right; padding: 8px 0; color: #f3d58a; font-weight: 600;" id="rs-payback">0y</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="model-card" data-model="area-developer" tabindex="0" role="button" aria-pressed="false" aria-label="Area-developer model">
+        <h4 data-i18n="partners.area-developer.title">Area Developer</h4>
+        <p data-i18n="partners.area-developer.desc">Gestisci 5-10 unità in una regione. Supporto Pizzaio completo.</p>
+        <div class="sim-controls">
+          <div class="sim-row">
+            <label for="ad-units" data-i18n="sim.units">Units</label>
+            <input type="range" id="ad-units" min="1" max="20" value="5" step="1" aria-label="Number of units slider">
+            <span class="value" id="ad-units-value">5</span>
+          </div>
+          <div class="sim-row">
+            <label for="ad-daily-per-unit" data-i18n="sim.daily-per-unit">Daily/Unit</label>
+            <input type="range" id="ad-daily-per-unit" min="150" max="400" value="250" step="10" aria-label="Daily sales per unit slider">
+            <span class="value" id="ad-daily-per-unit-value">€250</span>
+          </div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px;">
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.daily-profit" style="padding: 8px 0;">Daily Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="ad-daily-profit">€500</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.monthly-profit" style="padding: 8px 0;">Monthly Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="ad-monthly-profit">€15.000</td>
+          </tr>
+          <tr style="border-bottom: 1px solid var(--border-color);">
+            <td data-i18n="sim.annual-profit" style="padding: 8px 0;">Annual Profit</td>
+            <td style="text-align: right; padding: 8px 0; color: var(--accent-cyan); font-weight: 600;" id="ad-annual-profit">€180.000</td>
+          </tr>
+          <tr>
+            <td data-i18n="sim.payback" style="padding: 8px 0; font-weight: 600; color: #f3d58a;">Payback</td>
+            <td style="text-align: right; padding: 8px 0; color: #f3d58a; font-weight: 600;" id="ad-payback">1.2y</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist Section -->
+  <section id="waitlist" role="region" aria-label="Join waitlist">
+    <h3 data-i18n="waitlist.title">Unisciti alla waitlist</h3>
+    <div class="waitlist-form">
+      <form id="waitlist-form" novalidate>
+        <div class="form-group">
+          <label for="email" data-i18n="form.email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required aria-describedby="email-help">
+        </div>
+        <div class="form-group">
+          <label for="interest" data-i18n="form.interest">Interest</label>
+          <select id="interest" name="interest" required aria-label="Your interest in PIZZAIO">
+            <option value="investor" data-i18n="form.investor">Investor</option>
+            <option value="partner" data-i18n="form.partner">Partner</option>
+            <option value="customer" data-i18n="form.customer">Customer</option>
+          </select>
+        </div>
+        <button type="submit" data-i18n="cta.join-waitlist">Unisciti</button>
+      </form>
+      <div class="form-status" id="form-status" role="alert" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<footer role="contentinfo">
+  <p data-i18n="footer.copy">© 2026 PIZZAIO — Made in Italy</p>
+  <p>
+    <a href="#" data-i18n="footer.privacy">Privacy</a> •
+    <a href="#" data-i18n="footer.terms">Terms</a> •
+    <a href="https://github.com" data-i18n="footer.github">GitHub</a>
+  </p>
+</footer>
+
+<script src="./translations.js"></script>
+<script>
+// Utility functions
+function escapeHTML(str) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return str.replace(/[&<>"']/g, m => map[m]);
+}
+
+function detectLang() {
+  const saved = localStorage.getItem('pizzaio-lang');
+  if (saved && ['it', 'en', 'es', 'fr', 'de', 'ja'].includes(saved)) return saved;
+  const browserLang = navigator.language.split('-')[0];
+  if (['it', 'en', 'es', 'fr', 'de', 'ja'].includes(browserLang)) return browserLang;
+  return 'it';
+}
+
+function setLang(lang) {
+  localStorage.setItem('pizzaio-lang', lang);
+  document.documentElement.setAttribute('data-lang', lang);
+  applyI18n(lang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+function applyI18n(lang) {
+  if (!window.I18N || !window.I18N[lang]) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    const text = getTranslation(lang, key);
+    if (text) {
+      if (el.tagName === 'INPUT') {
+        el.placeholder = text;
+      } else if (el.tagName === 'OPTION') {
+        el.textContent = text;
+      } else {
+        el.textContent = text;
+      }
+    }
+  });
+}
+
+function getTranslation(lang, key) {
+  if (!window.I18N) return null;
+  const keys = key.split('.');
+  let obj = window.I18N[lang];
+  for (let k of keys) {
+    if (obj && typeof obj === 'object' && k in obj) {
+      obj = obj[k];
+    } else {
+      return window.I18N.it[key] ? getTranslation('it', key) : null;
+    }
+  }
+  return typeof obj === 'string' ? obj : null;
+}
+
+// Simulator functions
+const PIZZAIO_INVESTMENT = 115000;
+const DAILY_COST = 35;
+const COST_PER_PIZZA = 3;
+
+function calculateOO() {
+  const sales = parseInt(document.getElementById('oo-daily-sales').value);
+  const margin = parseInt(document.getElementById('oo-margin').value) / 100;
+  const cost = DAILY_COST + (sales / 12 * COST_PER_PIZZA);
+  const dailyProfit = sales * margin - cost;
+  const monthlyProfit = dailyProfit * 30;
+  const annualProfit = monthlyProfit * 12;
+  const payback = PIZZAIO_INVESTMENT / (annualProfit || 1);
+  
+  document.getElementById('oo-daily-sales-value').textContent = '€' + sales.toLocaleString();
+  document.getElementById('oo-margin-value').textContent = Math.round(margin * 100) + '%';
+  document.getElementById('oo-daily-profit').textContent = '€' + Math.round(dailyProfit).toLocaleString();
+  document.getElementById('oo-monthly-profit').textContent = '€' + Math.round(monthlyProfit).toLocaleString();
+  document.getElementById('oo-annual-profit').textContent = '€' + Math.round(annualProfit).toLocaleString();
+  document.getElementById('oo-payback').textContent = payback.toFixed(1) + 'y';
+}
+
+function calculateRS() {
+  const sales = parseInt(document.getElementById('rs-daily-sales').value);
+  const pizzaioShare = parseInt(document.getElementById('rs-pizzaio-share').value) / 100;
+  const yourShare = 1 - pizzaioShare;
+  const margin = 0.5;
+  const dailyProfit = sales * margin * yourShare;
+  const monthlyProfit = dailyProfit * 30;
+  const annualProfit = monthlyProfit * 12;
+  
+  document.getElementById('rs-daily-sales-value').textContent = '€' + sales.toLocaleString();
+  document.getElementById('rs-pizzaio-share-value').textContent = Math.round(pizzaioShare * 100) + '%';
+  document.getElementById('rs-daily-profit').textContent = '€' + Math.round(dailyProfit).toLocaleString();
+  document.getElementById('rs-monthly-profit').textContent = '€' + Math.round(monthlyProfit).toLocaleString();
+  document.getElementById('rs-annual-profit').textContent = '€' + Math.round(annualProfit).toLocaleString();
+  document.getElementById('rs-payback').textContent = '0y';
+}
+
+function calculateAD() {
+  const units = parseInt(document.getElementById('ad-units').value);
+  const dailyPerUnit = parseInt(document.getElementById('ad-daily-per-unit').value);
+  const margin = 0.35;
+  const cost = DAILY_COST * units;
+  const totalSales = dailyPerUnit * units;
+  const dailyProfit = totalSales * margin - cost;
+  const monthlyProfit = dailyProfit * 30;
+  const annualProfit = monthlyProfit * 12;
+  const payback = (PIZZAIO_INVESTMENT * units) / (annualProfit || 1);
+  
+  document.getElementById('ad-units-value').textContent = units;
+  document.getElementById('ad-daily-per-unit-value').textContent = '€' + dailyPerUnit.toLocaleString();
+  document.getElementById('ad-daily-profit').textContent = '€' + Math.round(dailyProfit).toLocaleString();
+  document.getElementById('ad-monthly-profit').textContent = '€' + Math.round(monthlyProfit).toLocaleString();
+  document.getElementById('ad-annual-profit').textContent = '€' + Math.round(annualProfit).toLocaleString();
+  document.getElementById('ad-payback').textContent = payback.toFixed(1) + 'y';
+}
+
+function initSim() {
+  ['oo-daily-sales', 'oo-margin'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', calculateOO);
+  });
+  ['rs-daily-sales', 'rs-pizzaio-share'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', calculateRS);
+  });
+  ['ad-units', 'ad-daily-per-unit'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', calculateAD);
+  });
+  calculateOO();
+  calculateRS();
+  calculateAD();
+}
+
+function onModelChange(model) {
+  document.querySelectorAll('.model-card').forEach(card => {
+    card.classList.toggle('active', card.dataset.model === model);
+    card.setAttribute('aria-pressed', card.dataset.model === model);
+  });
+}
+
+// Form handler
+const WAITLIST_ENDPOINT = 'https://pizzaio-waitlist-api.onrender.com/api/waitlist';
+
+async function onWaitlist(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const interest = form.interest.value;
+  const statusEl = document.getElementById('form-status');
+  
+  statusEl.classList.remove('success', 'error');
+  statusEl.classList.add('show');
+  statusEl.textContent = 'Submitting...';
+  
+  try {
+    const response = await fetch(WAITLIST_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, interest })
+    });
+    
+    if (response.ok) {
+      statusEl.classList.add('success');
+      statusEl.textContent = 'Welcome! Check your email for next steps.';
+      form.reset();
+    } else {
+      statusEl.classList.add('error');
+      statusEl.textContent = 'Error: ' + (response.statusText || 'Unknown error');
+    }
+  } catch (err) {
+    statusEl.classList.add('error');
+    statusEl.textContent = 'Error: ' + err.message;
+  }
+}
+
+// Model card clicks
+document.querySelectorAll('.model-card').forEach(card => {
+  card.addEventListener('click', () => onModelChange(card.dataset.model));
+  card.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onModelChange(card.dataset.model);
+    }
+  });
+});
+
+// Language selector
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+// Waitlist form
+document.getElementById('waitlist-form')?.addEventListener('submit', onWaitlist);
+
+// Init on page load
+function boot() {
+  const lang = detectLang();
+  setLang(lang);
+  document.documentElement.setAttribute('data-lang', lang);
+  applyI18n(detectLang());
+    initSim();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body>
+</html>
